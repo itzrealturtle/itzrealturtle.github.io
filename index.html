@@ -1,0 +1,183 @@
+<!-- 
+
+
+
+
+
+
+
+
+hi sorry theres no arg or anything here, i just wanted to say that i love you and i hope you have a great day <3
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/utg.ico" type="image/x-icon">
+    <title>untitled tag game</title>
+
+    <meta property="og:title" content="untitled tag game"/>
+    <meta property="og:image" content="https://tr.rbxcdn.com/e1e1672135de39fd1605809cfb4386cd/768/432/Image/Webp"/>
+    <meta property="og:description" content="a nostalgic parkour tag game on Roblox"/>
+    <meta property="og:url" content="https://utg.lol/"/>
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627"/>
+    <meta property="og:type" content="game"/> 
+</head>
+<body id="bg">
+    <div id="game-icon" class="center">
+        <div id="title-untitled" class="center"><img id="stretch-untitled" src="/assets/title/untitled.png"></div>
+        <img id="title-tag" style="visibility: hidden" class="center" src="/assets/title/tag.png">
+        <img id="title-game" style="visibility: hidden" class="center" src="/assets/title/game.png">
+    </div>
+    <div id="epic-container" style="visibility: hidden" class="center">
+        <div id="rainbow"></div>
+    </div>
+    <div class="center">
+        <div id="start-button" style="transform: translate(0%, 14rem); visibility: hidden">
+            play <a>untitled tag game</a>
+            <p style="margin-top:.5rem">check back soon for more!</p>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var introDone = false;
+    
+    var iconX = 0;
+    var iconY = 0;
+
+    var iconXLerped = 0;
+    var iconYLerped = 0;
+
+    document.addEventListener("mousemove", function(event) {
+        var gameIcon = document.getElementById("game-icon");
+        var mouseX = event.clientX;
+        var mouseY = event.clientY;
+        iconX = mouseX / window.innerWidth * 25 - 12.5;
+        iconY = mouseY / window.innerHeight * 25 - 12.5;
+    });
+    function update() {
+        iconXLerped += (iconX - iconXLerped) * 0.004;
+        iconYLerped += (iconY - iconYLerped) * 0.004;
+
+        if (introDone) {
+            var gameIcon = document.getElementById("game-icon");
+        
+            var untitledIcon = document.getElementById("title-untitled");
+            var tagIcon = document.getElementById("title-tag");
+            var game = document.getElementById("title-game");
+    
+            var posX = iconXLerped + Math.sin(performance.now() / 1000) * 1;
+            var posY = iconYLerped + Math.cos((performance.now() + 100) / 1000) * 1;
+            
+            gameIcon.style.transform = "translate(-50%, -50%) translate(" + posX + "px, " + posY * 3 + "px) scale(0.66) rotate(" + posX * 0.25 + "deg)";
+            
+            untitledIcon.style.transform = "translate(-50%, -50%) translate(-22%, -32%) rotate(-8deg) translate(" + posX + "px, " + posY * 3 + "px) rotate(" + posX * 0.25 + "deg)";
+            tagIcon.style.transform = "translate(-50%, -50%) translate(3%, 23%) translate(" + posX + "px, " + posY * 3 + "px) rotate(" + posX * .25 + "deg)";
+            game.style.transform = "translate(-50%, -50%) translate(25%, 16.5%) translate(" + posX + "px, " + posY * 3 + "px) rotate(" + posX * -.25 + "deg)";
+        }
+        
+        requestAnimationFrame(update);
+    }
+
+    // wait
+    var gameIcon = document.getElementById("game-icon");
+    var bg = document.getElementById("bg");
+    var epicContainer = document.getElementById("epic-container");
+    var startButton = document.getElementById("start-button");
+
+    epicContainer.style.opacity = 0;
+    startButton.style.opacity = 0;
+
+    setTimeout(function() {
+        bg.style["background-color"] = "white";
+        setTimeout(function() {
+            var untitledIcon = document.getElementById("stretch-untitled");
+            untitledIcon.style.transform = "scale(1.2, 1.2)";
+            setTimeout (function() {
+                gameIcon.style.transform = "translate(-50%, -50%) scale(0) rotate(-45deg)";
+                setTimeout(function() {
+                    gameIcon.style.transitionTimingFunction = "cubic-bezier(0.34, 1.56, 0.64, 1)"
+                    gameIcon.style.transform = "translate(-50%, -50%) scale(0.66)";
+                    var untitledIcon = document.getElementById("stretch-untitled");
+                    untitledIcon.style.transform = "scale(1)";
+                    untitledIcon.style.transition = false;
+    
+                    var tagIcon = document.getElementById("title-tag");
+                    var game = document.getElementById("title-game");
+    
+                    tagIcon.style.visibility = "visible";
+                    game.style.visibility = "visible";
+    
+                    var untitledRealIcon = document.getElementById("title-untitled");
+                    untitledRealIcon.style.transform = "translate(-50%, -50%) translate(-22%, -32%) rotate(-8deg) scale(1)";
+                    
+                    bg.style["background-color"] = "#131313";
+                    bg.style.transitionDuration = "1s"
+
+                    setTimeout(function() {
+                        gameIcon.style.visibility = "visible";
+
+                        epicContainer.style.visibility = "visible";
+                        epicContainer.style.opacity = 1;
+
+                        epicContainer.style.transition = "opacity 0.5s ease";
+
+                        startButton.style.visibility = "visible";
+                        startButton.style.opacity = 1;
+
+                        startButton.style.transition = "opacity 0.5s ease";
+
+                        introDone = true;
+                        update();
+                    }, 600);
+                }, 600);
+            }, 600);
+        }, 500);
+    }, 100);
+
+    document.querySelector('#start-button a').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = 0;
+        overlay.style.left = 0;
+        overlay.style.width = '100vw';
+        overlay.style.height = '100vh';
+        overlay.style.background = 'rgba(0,0,0,1)';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.zIndex = 9999;
+
+        var img = document.createElement('img');
+        img.src = '/assets/Vm14U1IxWnJNVmRYV0doVllrZFNWMWxVUW5kWFJsWnpXa1JTVmxac2NFbFhXSEJ6VlZaV1ZVMUVhejA9.gif';
+        img.style.maxWidth = '80vw';
+        img.style.maxHeight = '80vh';
+        overlay.appendChild(img);
+
+        document.body.appendChild(overlay);
+
+        setTimeout(function() {
+            window.location.href = 'https://www.roblox.com/games/14044547200/recode-untitled-tag-game';
+        }, 1200);
+    });
+
+</script>
